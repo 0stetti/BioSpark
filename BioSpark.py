@@ -179,8 +179,8 @@ TEXTS = {
         "EN": "Language"
     },
     "report_bug": {
-        "PT": "🐛 Reportar Problema",
-        "EN": "🐛 Report Bug"
+        "PT": "✉️ Reportar Problema",
+        "EN": "✉️ Report Bug"
     },
     "warn_multiple": {
         "PT": "⚠️ MÚLTIPLOS SÍTIOS DE LIGAÇÃO DETECTADOS!",
