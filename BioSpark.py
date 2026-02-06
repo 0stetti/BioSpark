@@ -10,13 +10,13 @@ from Bio import SeqIO
 
 # --- 1. CONFIGURAÇÃO DA PÁGINA ---
 st.set_page_config(
-    page_title="BioSpark Studio",
+    page_title="BioSpark",
     layout="wide",
     page_icon="🧬",
     initial_sidebar_state="expanded"
 )
 
-# --- 2. SISTEMA DE TRADUÇÃO ---
+# --- 2. SISTEMA DE TRADUÇÃO (DICIONÁRIO) ---
 TEXTS = {
     "header_title": {
         "PT": "Simulador de Biologia Molecular",
@@ -26,17 +26,35 @@ TEXTS = {
         "PT": "Digestão Enzimática e PCR In Silico (com suporte a Overhangs e Múltiplos Sítios).",
         "EN": "In Silico Enzymatic Digestion and PCR (supports Overhangs and Multiple Sites)."
     },
-    "sidebar_config": { "PT": "CONFIGURAÇÕES", "EN": "SETTINGS" },
-    "sidebar_wells": { "PT": "Número de Poços", "EN": "Number of Wells" },
-    "sidebar_agarose": { "PT": "Agarose (%)", "EN": "Agarose (%)" },
-    "sidebar_visual": { "PT": "VISUALIZAÇÃO", "EN": "VISUALIZATION" },
-    "sidebar_theme": { "PT": "Tema do Gel", "EN": "Gel Theme" },
-    "guide_title": { "PT": "Guia Rápido", "EN": "Quick Guide" },
+    "sidebar_config": {
+        "PT": "CONFIGURAÇÕES",
+        "EN": "SETTINGS"
+    },
+    "sidebar_wells": {
+        "PT": "Número de Poços",
+        "EN": "Number of Wells"
+    },
+    "sidebar_agarose": {
+        "PT": "Agarose (%)",
+        "EN": "Agarose (%)"
+    },
+    "sidebar_visual": {
+        "PT": "VISUALIZAÇÃO",
+        "EN": "VISUALIZATION"
+    },
+    "sidebar_theme": {
+        "PT": "Tema do Gel",
+        "EN": "Gel Theme"
+    },
+    "guide_title": {
+        "PT": "Guia Rápido",
+        "EN": "Quick Guide"
+    },
     "guide_content": {
         "PT": """
         **🧬 Funcionalidades:**
         * **Digestão:** Simula o corte com enzimas de restrição.
-        * **PCR:** Simula a amplificação (suporta overhangs).
+        * **PCR:** Simula a amplificação de fragmentos (suporta overhangs).
         
         **📂 Arquivos Suportados:**
         * **.dna** (SnapGene)
@@ -70,38 +88,115 @@ TEXTS = {
         * Download the fragment table (.csv) at the bottom.
         """
     },
-    "well_title": { "PT": "Poço", "EN": "Well" },
-    "opt_sample": { "PT": "Digestão", "EN": "Digestion" },
-    "opt_ladder": { "PT": "Ladder", "EN": "Ladder" },
-    "opt_pcr": { "PT": "PCR", "EN": "PCR" },
-    "sel_ladder": { "PT": "Selecione o Ladder:", "EN": "Select Ladder:" },
-    "label_gel": { "PT": "Rótulo:", "EN": "Label:" },
-    
+    "well_title": {
+        "PT": "Poço",
+        "EN": "Well"
+    },
+    "opt_sample": {
+        "PT": "Digestão",
+        "EN": "Digestion"
+    },
+    "opt_ladder": {
+        "PT": "Ladder",
+        "EN": "Ladder"
+    },
+    "opt_pcr": {
+        "PT": "PCR",
+        "EN": "PCR"
+    },
+    "sel_ladder": {
+        "PT": "Selecione o Ladder:",
+        "EN": "Select Ladder:"
+    },
+    "label_gel": {
+        "PT": "Rótulo:",
+        "EN": "Label:"
+    },
     # NOVAS CHAVES (ABAS)
-    "tab_file": { "PT": "📂 Upload Arquivo", "EN": "📂 Upload File" },
-    "tab_text": { "PT": "📝 Digitar/Colar", "EN": "📝 Type/Paste" },
+    "tab_file": {
+        "PT": "📂 Upload Arquivo",
+        "EN": "📂 Upload File"
+    },
+    "tab_text": {
+        "PT": "📝 Digitar/Colar",
+        "EN": "📝 Type/Paste"
+    },
     
-    "upload_label": { "PT": "Upload DNA", "EN": "Upload DNA" },
-    "paste_label": { "PT": "Sequência", "EN": "Sequence" },
-    "check_circular": { "PT": "Circular?", "EN": "Circular?" },
-    "sel_enzymes": { "PT": "Enzimas", "EN": "Enzymes" },
-    "pcr_fwd": { "PT": "Primer Forward", "EN": "Forward Primer" },
-    "pcr_rev": { "PT": "Primer Reverse", "EN": "Reverse Primer" },
-    "result_title": { "PT": "Resultado da Eletroforese", "EN": "Electrophoresis Result" },
-    "export_expander": { "PT": "Exportar Dados", "EN": "Export Data" },
-    "btn_download": { "PT": "Baixar .csv", "EN": "Download .csv" },
-    "empty_msg": { "PT": "Para começar, adicione amostras nos cartões acima.", "EN": "To start, add samples in the cards above." },
-    "created_by": { "PT": "Desenvolvido por", "EN": "Developed by" },
-    "lab_name": { "PT": "Laboratório de Biofármacos", "EN": "Biopharmaceuticals Laboratory" },
-    "institute": { "PT": "Instituto Butantan", "EN": "Butantan Institute" },
-    "pref_lang": { "PT": "Idioma / Language", "EN": "Language" },
-    "report_bug": { "PT": "✉️ Reportar Problema", "EN": "✉️ Report Bug" },
-    "warn_multiple": { "PT": "⚠️ MÚLTIPLOS SÍTIOS DE LIGAÇÃO DETECTADOS!", "EN": "⚠️ MULTIPLE BINDING SITES DETECTED!" },
-    "warn_no_product": { "PT": "Nenhum produto (Verifique orientação 3')", "EN": "No product (Check 3' orientation)" },
-    "ack_title": { "PT": "Apoio e Afiliação", "EN": "Support & Affiliation" }
+    "upload_label": {
+        "PT": "Upload DNA",
+        "EN": "Upload DNA"
+    },
+    "paste_label": {
+        "PT": "Sequência",
+        "EN": "Sequence"
+    },
+    "check_circular": {
+        "PT": "Circular?",
+        "EN": "Circular?"
+    },
+    "sel_enzymes": {
+        "PT": "Enzimas",
+        "EN": "Enzymes"
+    },
+    "pcr_fwd": {
+        "PT": "Primer Forward",
+        "EN": "Forward Primer"
+    },
+    "pcr_rev": {
+        "PT": "Primer Reverse",
+        "EN": "Reverse Primer"
+    },
+    "result_title": {
+        "PT": "Resultado da Eletroforese",
+        "EN": "Electrophoresis Result"
+    },
+    "export_expander": {
+        "PT": "Exportar Dados",
+        "EN": "Export Data"
+    },
+    "btn_download": {
+        "PT": "Baixar .csv",
+        "EN": "Download .csv"
+    },
+    "empty_msg": {
+        "PT": "Para começar, adicione amostras nos cartões acima.",
+        "EN": "To start, add samples in the cards above."
+    },
+    "created_by": {
+        "PT": "Desenvolvido por",
+        "EN": "Developed by"
+    },
+    "lab_name": {
+        "PT": "Laboratório de Biofármacos",
+        "EN": "Biopharmaceuticals Laboratory"
+    },
+    "institute": {
+        "PT": "Instituto Butantan",
+        "EN": "Butantan Institute"
+    },
+    "pref_lang": {
+        "PT": "Idioma / Language",
+        "EN": "Language"
+    },
+    "report_bug": {
+        "PT": "🐛 Reportar Problema",
+        "EN": "🐛 Report Bug"
+    },
+    "warn_multiple": {
+        "PT": "⚠️ MÚLTIPLOS SÍTIOS DE LIGAÇÃO DETECTADOS!",
+        "EN": "⚠️ MULTIPLE BINDING SITES DETECTED!"
+    },
+    "warn_no_product": {
+        "PT": "Nenhum produto (Verifique orientação 3')",
+        "EN": "No product (Check 3' orientation)"
+    },
+    "acknowledge_title": {
+        "PT": "Apoio e Afiliação",
+        "EN": "Support & Affiliation"
+    }
 }
 
-# --- 3. ESTILO CSS ---
+# --- 3. ESTILO CSS (TURQUESA + MINIMALISTA) ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -114,14 +209,6 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background-color: #E0F7FA;
         border-right: 1px solid #B2EBF2;
-        padding-top: 10px;
-    }
-    
-    /* Ajuste para compactar a sidebar */
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-        gap: 0.5rem;
     }
 
     div[data-baseweb="slider"] div[class*="StyledThumb"] {
@@ -174,34 +261,29 @@ st.markdown("""
         background-color: #0F766E !important;
     }
     
-    /* ABAS com fonte ajustada */
+    /* Estilo das Abas */
     button[data-baseweb="tab"] {
-        font-size: 13px !important;
+        font-size: 14px !important;
         font-weight: 500 !important;
-        padding: 8px 12px !important;
     }
 
-    /* RODAPÉ SIDEBAR (NOVO ESTILO PRETO/CINZA) */
-    .sidebar-footer {
-        margin-top: 15px;
-        padding-top: 10px;
-        border-top: 1px solid #CBD5E1;
+    .footer {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
         font-size: 11px;
-        color: #333333;
-        line-height: 1.4;
-    }
-    .sidebar-footer strong {
-        color: #111827;
-        font-weight: 600;
+        color: #64748B;
+        border-top: 1px solid #CBD5E1;
+        margin-top: 40px;
+        opacity: 0.9;
     }
     
     .bug-report {
         font-size: 11px;
-        color: #4B5563;
+        color: #64748B;
         text-decoration: none;
-        display: block;
         margin-top: 5px;
-        margin-bottom: 10px;
+        display: inline-block;
     }
     .bug-report:hover {
         color: #0F766E;
@@ -214,20 +296,25 @@ st.markdown("""
         font-size: 12px;
     }
     
-    .footer {
-        width: 100%;
-        text-align: center;
-        padding: 20px 0;
+    /* Estilo dos Agradecimentos */
+    .ack-box {
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #B2EBF2;
         font-size: 11px;
-        color: #64748B;
-        border-top: 1px solid #CBD5E1;
-        margin-top: 40px;
-        opacity: 0.8;
+        color: #334155;
+        line-height: 1.5;
+    }
+    .ack-title {
+        font-weight: 700;
+        color: #333333;
+        margin-bottom: 4px;
+        display: block;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. BACKEND (LÓGICA ORIGINAL PRESERVADA) ---
+# --- 4. BACKEND (LÓGICA BIOLÓGICA) ---
 
 TODAS_ENZIMAS = sorted([str(e) for e in CommOnly])
 
@@ -345,7 +432,7 @@ def calcular_pcr_biologico(sequencia, fwd_seq, rev_seq, eh_circular):
     
     if len(fwd) < 10 or len(rev) < 10: return [], False
 
-    # LÓGICA DE SEED 15bp (Mantida da sua versão estável)
+    # Lógica de Seed 15pb (A que estava funcionando)
     SEED_SIZE = 15
     fwd_seed = fwd[-SEED_SIZE:] if len(fwd) > SEED_SIZE else fwd
     rev_seed = rev[-SEED_SIZE:] if len(rev) > SEED_SIZE else rev
@@ -365,7 +452,6 @@ def calcular_pcr_biologico(sequencia, fwd_seq, rev_seq, eh_circular):
                 if distancia_interna >= 0:
                     tamanho_total = len(fwd) + len(rev) + distancia_interna
                     produtos.append(tamanho_total)
-            
             elif eh_circular and r_pos < f_pos:
                 dist_fim = len(template) - f_3prime_end
                 dist_inicio = r_pos
@@ -391,7 +477,6 @@ with st.sidebar:
         <h1 style="font-family: 'Inter', sans-serif; font-weight: 800; color: #0F766E; font-size: 26px; letter-spacing: -1px; margin:0;">
             BioSpark
         </h1>
-        <p style="font-size: 10px; color: #0F766E; opacity: 0.7; margin:0; text-transform: uppercase; letter-spacing: 1px;">Studio</p>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("---")
@@ -426,16 +511,19 @@ with st.sidebar:
         st.session_state.lang = novo_lang
         st.rerun()
 
-    # RODAPÉ LATERAL COMPACTO E PRETO (AJUSTADO)
+    # RODAPÉ COM CRÉDITOS E AGRADECIMENTOS
     st.markdown(f"""
-    <div class="sidebar-footer">
+    <div style="font-size: 11px; color: #334155; line-height: 1.4; margin-top: 15px;">
         <strong>{TEXTS['created_by'][lang]} Elton Ostetti</strong><br>
+        <div class="ack-box">
+            <span class="ack-title">{TEXTS['acknowledge_title'][lang]}</span>
+            • <strong>FAPESP</strong><br>
+            • <strong>USP</strong> (Universidade de São Paulo)<br>
+            • <strong>Instituto Butantan</strong>
+        </div>
         <a class="bug-report" href="mailto:e.ostetti.proppg@proppg.butantan.gov.br?subject=Bug%20Report%20BioSpark">
             {TEXTS['report_bug'][lang]}
         </a>
-        <div style="margin-top: 10px; opacity: 0.9;">
-            FAPESP • USP • Instituto Butantan
-        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -456,6 +544,7 @@ for i in range(num_pocos):
     col_atual = cols[i % 4]
     with col_atual:
         with st.expander(f"🔹 {TEXTS['well_title'][lang]} {i+1}", expanded=(i==0)):
+            # Opções
             opcoes_tipo = [TEXTS['opt_sample'][lang], TEXTS['opt_pcr'][lang], TEXTS['opt_ladder'][lang]]
             tipo_display = st.radio("Tipo", options=opcoes_tipo, key=f"t_{i}", horizontal=True, label_visibility="collapsed")
             
@@ -480,9 +569,9 @@ for i in range(num_pocos):
                     "Bandas (pb)": "; ".join([str(t) for t in LADDERS[lad]])
                 })
             
-            else:
+            else: # Amostra ou PCR
                 nomes_ladders.append(None)
-                # ABAS ATUALIZADAS (TEXTO)
+                # ABAS ATUALIZADAS COM TEXTO
                 tab_f, tab_t = st.tabs([TEXTS['tab_file'][lang], TEXTS['tab_text'][lang]])
                 seq, nome_arquivo = "", ""
                 
@@ -575,12 +664,8 @@ if any(dados_para_plotar):
     else: 
         bg_color = 'white'; text_color = 'black'; color_sample = 'black'; color_ladder = 'black'
 
-    # CORREÇÃO EIXO Y (FLUTUANTE)
-    min_view = 25 
+    min_view = 50 + (100 * (agarose - 0.5)) 
     max_view = 25000 / (agarose * 0.8)
-    
-    # EIXO X FIXO (VISUAL 15 POÇOS)
-    max_range = max(num_pocos, 15) + 0.5
 
     fig = go.Figure()
 
@@ -593,8 +678,7 @@ if any(dados_para_plotar):
              massa_total = sum([b[2] for b in lista_bandas]) if not eh_ladder else 1
         
         for (tam_aparente, tipo_banda, tam_real) in lista_bandas:
-            # Filtro com margem fixa
-            if tam_aparente < (min_view * 0.9) or tam_aparente > (max_view * 1.1): continue
+            if tam_aparente < min_view or tam_aparente > max_view: continue
 
             width = 2; opacity = 0.8
             if eh_ladder:
@@ -610,13 +694,12 @@ if any(dados_para_plotar):
 
             largura_banda = 0.28 
             
-            # VISUAL HALTERE/PALITO RESTAURADO
             fig.add_trace(go.Scatter(
                 x=[x_center - largura_banda, x_center + largura_banda],
                 y=[tam_aparente, tam_aparente],
                 mode='lines+markers',
                 line=dict(color=cor_atual, width=width),
-                marker=dict(color=cor_atual, size=width, symbol='circle'), # AS BOLINHAS
+                marker=dict(color=cor_atual, size=width, symbol='circle'),
                 opacity=opacity,
                 showlegend=False,
                 hoverinfo='text',
@@ -630,6 +713,8 @@ if any(dados_para_plotar):
                     textfont=dict(color=text_color, size=10),
                     showlegend=False, hoverinfo='skip'
                 ))
+
+    max_range = max(num_pocos, 15) + 0.5
 
     fig.update_layout(
         plot_bgcolor=bg_color, paper_bgcolor=bg_color,
